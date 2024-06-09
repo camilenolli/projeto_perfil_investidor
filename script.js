@@ -1,6 +1,38 @@
 function startQuiz() {
+    console.log('Iniciando o quiz...');
     document.querySelector('.content').style.display = 'none';
     document.getElementById('quizForm').style.display = 'block';
+    document.getElementById('quizForm').classList.add('show'); // Adicionando a classe 'show' para exibir as perguntas
+    updateProgressBar(); // Adicionando esta linha para atualizar a barra de progresso no início do quiz
+}
+
+
+function previousQuestion(currentQuestion) {
+    if (currentQuestion === 1) {
+        // Se estivermos na primeira pergunta, não fazemos nada
+        return;
+    }
+
+    const current = document.getElementById(`question${currentQuestion}`);
+    const previous = document.getElementById(`question${currentQuestion - 1}`);
+    
+    current.style.display = 'none';
+    previous.style.display = 'block';
+    updateProgressBar(); // Atualiza a barra de progresso ao voltar para a pergunta anterior
+    
+    const backButton = document.querySelector('.back-button');
+    if (currentQuestion - 1 === 1) {
+        // Se voltarmos para a primeira pergunta, ocultamos o botão de voltar
+        backButton.style.display = 'none';
+    } else {
+        backButton.style.display = 'inline-block';
+    }
+}
+
+function displayErrorMessage(message, questionNumber) {
+    const errorMessageDiv = document.getElementById(`error-message${questionNumber}`);
+    errorMessageDiv.textContent = message;
+    errorMessageDiv.style.color = 'red';
 }
 
 function nextQuestion(currentQuestion) {
@@ -11,9 +43,13 @@ function nextQuestion(currentQuestion) {
         current.style.display = 'none';
         if (next) {
             next.style.display = 'block';
+        } else {
+            calculateResult(); // Chama calculateResult() quando todas as perguntas forem respondidas
+            updateProgressBar(); // Atualiza a barra de progresso após calcular o resultado final
         }
+        updateProgressBar(); // Atualiza a barra de progresso após exibir a próxima pergunta
     } else {
-        alert("Por favor, selecione uma opção.");
+        displayErrorMessage("Selecione uma opção para prosseguir.", currentQuestion);
     }
 }
 
@@ -24,8 +60,6 @@ function calculateResult() {
     const q3 = form.querySelector('[name="q3"]:checked').value;
     const q4 = form.querySelector('[name="q4"]:checked').value;
     const q5 = form.querySelector('[name="q5"]:checked').value;
-
-    const resultDiv = document.getElementById('result');
 
     let profile;
 
@@ -140,7 +174,8 @@ function calculateResult() {
     } else if (profile === "Agressivo de Longo Prazo") {
         recommendations = `
             <ul>
-                <li>Private equity - Participação em empresas com alto potencial de valorização.</li>
+                <li>Private equity
+                - Participação em empresas com alto potencial de valorização.</li>
                 <li>Criptomoedas com hold a longo prazo - Estratégia de manutenção de ativos digitais.</li>
                 <li>Investimentos alternativos - Startups, venture capital, e outros investimentos de alto risco.</li>
             </ul>
@@ -149,14 +184,35 @@ function calculateResult() {
         recommendations = "Por favor, revise suas respostas.";
     }
 
-    resultDiv.innerHTML = `
-        <h2>${profile}</h2>
-        <p>${description}</p>
-        ${recommendations}
-    `;
+    const resultDiv = document.getElementById('result');
+    if (resultDiv) {
+        resultDiv.innerHTML = `
+            <h2>${profile}</h2>
+            <p>${description}</p>
+            ${recommendations}
+        `;
 
-    document.getElementById('quizForm').style.display = 'none';
-    resultDiv.style.display = 'block';
+        document.getElementById('quizForm').style.display = 'none';
+        resultDiv.style.display = 'block';
+
+        // Adiciona a classe de transição
+        resultDiv.classList.add('transition');
+
+        // Aguarda um pequeno intervalo antes de adicionar a classe 'show'
+        setTimeout(() => {
+            // Adiciona a classe 'show' após um pequeno intervalo
+            resultDiv.classList.add('show');
+        }, 100); // Ajuste este valor conforme necessário
+    } else {
+        console.error("Elemento com id 'result' não encontrado!");
+    }
+}
+
+function updateProgressBar() {
+    const totalQuestions = 5;
+    const answeredQuestions = document.querySelectorAll('.question input[type="radio"]:checked').length;
+    const progress = (answeredQuestions / totalQuestions) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
 }
 
 // Verifica se a página atual é a página inicial
@@ -164,6 +220,11 @@ document.addEventListener("DOMContentLoaded", function() {
     var homeLink = document.querySelector(".inicio");
     if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
         homeLink.style.color = "#4692c5";
+        homeLink.addEventListener("click", function(event) {
+            if (!homeLink.hasAttribute("data-link")) {
+                event.preventDefault(); // Impede o redirecionamento
+            }
+        });
     } else {
         homeLink.style.color = "#fff";
     }

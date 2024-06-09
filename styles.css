@@ -1,3 +1,35 @@
+.transition.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+hr {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    border-top: 2px solid #ccc;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.progress-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: #045734;
+    transition: width 0.3s;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -45,8 +77,21 @@ body {
     width: 120%;
     margin: 0 auto;
     display: none; /* Inicialmente oculto */
-    margin-top: 200px;
+    margin-top: 190px;
 }
+
+#result {
+    background: #fff;
+    padding: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 700px;
+    width: 90%;
+    margin: 0 auto;
+    display: none; /* Inicialmente oculto */
+    margin-top: 160px;
+}
+
 
 .container p {
     padding-bottom: 15px;
@@ -90,23 +135,23 @@ label {
     border-radius: 5px;
     font-size: 14px;
     margin-top: 10px;
-    margin-right: 40px;
+
+}
+
+.back-button {
+    padding: 10px 16px;
+    background: #409579;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-left: 5px;
 }
 
 button:hover {
     background: #045734;
-}
-
-#result {
-    background: #fff;
-    padding: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    max-width: 700px;
-    width: 90%;
-    margin: 0 auto;
-    display: none; /* Inicialmente oculto */
-    margin-top: 160px;
 }
 
 #result h2 {

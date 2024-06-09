@@ -8,29 +8,33 @@
     <link rel="icon" href="logo.png" type="image/png">
 </head>
 <body>
-
     <div class="navbar">
         <ul>
-            <li><a class="inicio" href="index.html">INÍCIO</a></li>
+            <li><a class="inicio" href="index.html" data-link>INÍCIO</a></li>
             <li><a href="#">SOBRE</a></li>
             <li><a href="#">CONTATO</a></li>
         </ul>
     </div>
 
     <div class="content">
-        <h3>Bem-vindo ao Perfil do Investidor!</h3>
-        <h1>Descubra aqui o seu Perfil de Investidor.</h1>
+        
+        <h1>Bem-Vindo ao Perfil do Investidor!</h1>
         <p>Responda cinco perguntas, confira o seu perfil de investidor e receba recomendações de investimentos personalizadas.</p>
-        <button class="btn-comecar" onclick="startQuiz()">COMEÇAR</button>
+        <hr>
+        <button class="btn-comecar" onclick="startQuiz()">Começar</button>
     </div>
 
-    <div class="container" id="quizForm" style="display:none;">
-        <form id="quizForm">
+    <div class="container transition" id="quizForm" style="display:none;">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <form id="quizForm" class="transition">
             <div class="question" id="question1">
                 <p>1. Qual é o seu nível de conhecimento sobre investimentos financeiros?</p>
                 <label><input type="radio" name="q1" value="Iniciante"> Básico</label>
                 <label><input type="radio" name="q1" value="Intermediário"> Intermediário</label>
                 <label><input type="radio" name="q1" value="Avançado"> Avançado</label>
+                <div id="error-message1" class="error-message"></div>
                 <button class="btn-proximo" type="button" onclick="nextQuestion(1)">Próximo</button>
             </div>
             <div class="question" id="question2" style="display:none;">
@@ -38,35 +42,41 @@
                 <label><input type="radio" name="q2" value="Ações"> Ações</label>
                 <label><input type="radio" name="q2" value="Fundos mútuos"> Fundos mútuos</label>
                 <label><input type="radio" name="q2" value="Imóveis"> Imóveis</label>
+                <div id="error-message2" class="error-message"></div>
                 <button class="btn-proximo" type="button" onclick="nextQuestion(2)">Próximo</button>
-            </div>
+                <button class="btn-voltar back-button" type="button" onclick="previousQuestion(2)">Voltar</button>
+            </div>            
             <div class="question" id="question3" style="display:none;">
                 <p>3. Quais são seus principais objetivos financeiros?</p>
                 <label><input type="radio" name="q3" value="Aposentadoria"> Aposentadoria</label>
                 <label><input type="radio" name="q3" value="Compra de um bem"> Compra de bens (imóvel, veículo, etc)</label>
                 <label><input type="radio" name="q3" value="Educação dos filhos"> Educação dos filhos</label>
+                <div id="error-message3" class="error-message"></div>
                 <button class="btn-proximo" type="button" onclick="nextQuestion(3)">Próximo</button>
+                <button class="btn-voltar back-button" type="button" onclick="previousQuestion(3)">Voltar</button>
             </div>
             <div class="question" id="question4" style="display:none;">
                 <p>4. Qual é o prazo para alcançar esse objetivo?</p>
                 <label><input type="radio" name="q4" value="Curto prazo"> 1-3 anos</label>
                 <label><input type="radio" name="q4" value="Médio prazo"> 3-7 anos</label>
                 <label><input type="radio" name="q4" value="Longo prazo"> 7+ anos</label>
+                <div id="error-message4" class="error-message"></div>
                 <button class="btn-proximo" type="button" onclick="nextQuestion(4)">Próximo</button>
+                <button class="btn-voltar back-button" type="button" onclick="previousQuestion(4)">Voltar</button>
             </div>
             <div class="question" id="question5" style="display:none;">
                 <p>5. Como você descreveria sua tolerância ao risco?</p>
                 <label><input type="radio" name="q5" value="Conservador"> Baixa tolerância ao risco</label>
                 <label><input type="radio" name="q5" value="Moderado"> Tolerância média ao risco</label>
                 <label><input type="radio" name="q5" value="Agressivo"> Alta tolerância ao risco</label>
+                <div id="error-message5" class="error-message"></div>
                 <button class="btn-proximo" type="button" onclick="calculateResult()">Finalizar</button>
+                <button class="btn-voltar back-button" type="button" onclick="previousQuestion(5)">Voltar</button>
             </div>
-        </form>    
+        </form>
     </div>
 
-    <div id="result" style="display:none;"></div>
-    <!--<button id="returnButton" onclick="returnToStart()" style="display:none;">Voltar ao início</button>-->
+    <div id="result" class="transition" style="display:none;"></div>
     <script src="script.js"></script>
-    
 </body>
 </html>
